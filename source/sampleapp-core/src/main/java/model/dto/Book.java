@@ -9,14 +9,23 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "Book", propOrder = { "id", "year", "title", "publisher",
+		"author", "price" })
 public class Book implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	@XmlElement(name = "id", required = true)
 	private int id;
+	@XmlElement(name = "year", required = true)
 	private Date year;
+	@XmlElement(name = "title", required = true)
 	private String title;
+	@XmlElement(name = "publisher", required = true)
 	private String publisher;
+	@XmlElement(name = "author", required = true)
 	private String author;
+	@XmlElement(name = "price", required = true)
 	private BigDecimal price;
 
 	public Book() {

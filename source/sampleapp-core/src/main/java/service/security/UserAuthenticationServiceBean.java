@@ -1,9 +1,5 @@
 package service.security;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -12,9 +8,7 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import model.entity.Role.UserRoleName;
 import model.entity.User;
-import model.entity.User.UserState;
 import model.security.UserDTO;
 
 import org.slf4j.Logger;
@@ -40,18 +34,15 @@ public class UserAuthenticationServiceBean implements
 
 		try {
 			LOG.info("fetching active user: {}", username);
+			final String jpq = "from User u join fetch u.role where u.name=:name and u.password=:password and u.state=:state";
+			final TypedQuery<User> query = manager.createQuery(jpq, User.class);
 
+			final User user = query.setParameter("name", username)
+					.setParameter("password", password)
+					.setParameter("state", User.UserState.ACTIVE)
+					.getSingleResult();
 
-			final List<UserRoleName> roles = new ArrayList<>();
-			roles.add(UserRoleName.ADMIN);
-			roles.add(UserRoleName.BASIC);
-
-			final UserDTO mockedUser = new UserDTO();
-			mockedUser.setUsername("admin");
-			mockedUser.setState(UserState.ACTIVE);
-			mockedUser.setRoles(roles);
-
-			return mockedUser;
+			return transformer.toDTO(user);
 
 		} catch (final NoResultException ex) {
 			LOG.warn("No active user", ex);

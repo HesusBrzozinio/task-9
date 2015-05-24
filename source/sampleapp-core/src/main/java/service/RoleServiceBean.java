@@ -27,12 +27,10 @@ public class RoleServiceBean implements RoleServiceLocal {
 	@Override
 	public List<UserRoleName> getAllRoleNames() {
 		try {
-			final List<UserRoleName> roles = new ArrayList<>();
-			roles.add(UserRoleName.ADMIN);
-			roles.add(UserRoleName.BASIC);
-			
-			return roles;
-
+			final String jpq = "from Role r";
+			final TypedQuery<Role> query = manager.createQuery(jpq, Role.class);
+			final List<Role> roles = query.getResultList();
+			return getRoleNames(roles);
 		} catch (Exception ex) {
 			LOG.error(ex.getLocalizedMessage(), ex);
 			return Collections.<UserRoleName> emptyList();

@@ -48,7 +48,17 @@ public class UserServiceBean implements UserServiceLocal {
 	@Override
 	public void updateUser(final UserDTO actualUser) {
 		try {
-			// zaktualizuj kod 
+			final String jpql = "from Role r where r.name in :names";
+			final TypedQuery<Role> query = manager
+					.createQuery(jpql, Role.class);
+			final List<Role> roles = query.setParameter("names",
+					actualUser.getRoles()).getResultList();
+			LOG.info("updating user with roles {}", roles);
+			final User entity = manager.find(User.class, actualUser.getId());
+			entity.setRoles(roles);
+			entity.setState(actualUser.getState());
+
+			LOG.info("user updated id={}", entity.getId());
 		} catch (final Exception ex) {
 			LOG.error("update failed id={}", actualUser.getId(), ex);
 		}
@@ -57,7 +67,9 @@ public class UserServiceBean implements UserServiceLocal {
 	@Override
 	public void deleteUser(UserDTO actualUser) {
 		try {
-			// zaktualizuj kod
+			final User entity = manager.find(User.class, actualUser.getId());
+			manager.remove(entity);
+			LOG.info("user deleted id={}", entity.getId());
 		} catch (Exception ex) {
 			LOG.error("delete failed id={}", actualUser.getId(), ex);
 		}
@@ -77,8 +89,10 @@ public class UserServiceBean implements UserServiceLocal {
 	@Override
 	public boolean exists(final String username) {
 		try {
-			
-			return true;
+			final String jpql = "SELECT COUNT(u) FROM User u WHERE u.name = :name";
+			final Long number = manager.createQuery(jpql, Long.class)
+					.setParameter("name", username).getSingleResult();
+			return number > 0;
 		} catch (final Exception ex) {
 			LOG.error("username check error for name={}", username, ex);
 			return true;

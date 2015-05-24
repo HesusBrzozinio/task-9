@@ -13,9 +13,7 @@
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="6,12,16">
 
-				<f:facet name="header">
-				<!-- wykorzystaj zarejestrowany resource bundle do wyświetlenia opisu strony w wielu językach -->
-				</f:facet>
+				<f:facet name="header">#{text['books.page.title']}</f:facet>
 
 				<p:panel header="#{book.title}" style="text-align:left">
 
@@ -54,8 +52,12 @@
 							</div>
 						</div>
 					</div>
-
-					<!-- Dodaj przycisk akcji wywołujący metodę dodawania ksiązki do koszyka oraz aktualizujący stan licznika ksiązek w koszyku -->
+					<f:facet name="actions">
+						<p:commandLink action="#{shoppingCart.addBook(book, 1)}" update="cartItemCounter"
+							styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default">
+							<h:outputText styleClass="ui-icon ui-icon-plusthick" />
+						</p:commandLink>
+					</f:facet>
 				</p:panel>
 
 			</p:dataGrid>

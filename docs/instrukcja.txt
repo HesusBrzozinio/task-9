@@ -1,14 +1,1 @@
-Strona createAccountPanel zawiera formularz umo¿liwiaj¹cy utworzenie nowego konta. 
-Do istniej¹cago formularza dodaj nastêpuj¹ce walidacje:
-- wymagalnoœæ ka¿dego pola formularza
-- wartoœci obu podanych hase³ musz¹ byæ jednakowe
-- nazwa u¿ytkownika musi byæ unikatowe (utwórz zapytanie do bazy danych o liczbê u¿ytkowników o podanej nazwie)
-
-Do wyœwietlania b³êdów walidacji u¿yj komponentu <h:message>. Walidacje oprzyj na ajaxowym zdarzeniu 'blur'.
-
-Walidacjê wymagalnoœci pola wykonaj u¿ywaj¹c wbudowanych atrybutów komponentu <h:inputSecret>.
-
-W celu wykonania walidacji czy oba has³a s¹ jednakowe, w kontrolerze UserManagementController nale¿y utworzyæ metodê walidatora przyjmuj¹c¹ trzy parametry: kontekst wywo³ania FacesContext, komponent podlegaj¹cy walidacji UIComponent oraz wartoœæ komponentu w postaci obiektu Object (poniewa¿ has³o jest wpisane jako tekst, nale¿y zrzutowaæ Obiekt na String). W przypadku negatywnego wyniku walidacji nale¿y utworzyæ obiekt klasy FacesMessage z informacj¹ o b³edzie walidacji a nastêpnie zg³osiæ wyj¹tek ValidatorException przekazuj¹c w konstruktorze obiekt FacesMessage. Utworzona w ten sposób wiadomoœæ zostanie wyœwietlona przez komponent <h:messages>.
-
-W przypadku walidacji nazwy u¿ytkownika, w serwisie UserServiceLocal dodaj metodê sprawdzaj¹c¹ czy u¿ytkownik o podanej nazwie istniej ju¿ w bazie danych. W tym celu utwórz zapytanie JPQL podaj¹ce liczbê u¿ytkowników o podanej nazwie, nastêpnie utwórz obiekt zapytania za pomic¹ EntityManagera, ustaw parametry zapytania i pobie¿ z niego wynik.
-Nastêpnie w kontrolerze UserManagementController utwórz metodê waliduj¹c¹ tak samo jak dla has³a a nastêpnie wewn¹trz wywo³aj metodê serwisu UserServiceLocal. 
+Zmodyfikuj serwis BookServiceBean tak, aby ksi¹¿ki pobierane by³y z bazy danych. W tym celu utwórz encjê BookEntity.

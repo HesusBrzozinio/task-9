@@ -8,7 +8,10 @@
 			<supported-locale>en</supported-locale>
 		</locale-config>
 
-		
+		<resource-bundle>
+			<base-name>pl.kb.messages</base-name>
+			<var>text</var>
+		</resource-bundle>
 
 		<action-listener>org.primefaces.application.DialogActionListener</action-listener>
 		<navigation-handler>

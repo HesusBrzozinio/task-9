@@ -32,7 +32,11 @@
 								rendered="#{not sysAuth.loggedIn}" /></li>
 
 					</ul>
-					<!-- dodaj listę obsługiwanych jezykow -->
+					<h:selectOneMenu value="#{language.localeCode}" onchange="submit()"
+						valueChangeListener="#{language.countryLocaleCodeChanged}"
+						style="width: 100px;">
+						<f:selectItems value="#{language.countriesInMap}" />
+					</h:selectOneMenu>
 				</div>
 			</div>
 		</div>

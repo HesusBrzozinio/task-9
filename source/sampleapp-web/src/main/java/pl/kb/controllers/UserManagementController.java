@@ -137,6 +137,30 @@ public class UserManagementController implements Serializable {
 		return null;
 	}
 
+	public void validateSamePassword(final FacesContext context,
+			final UIComponent toValidate, final Object value) {
+
+		final String confirmPassword = (String) value;
+		if (!confirmPassword.equals(actualUser.getPassword())) {
+			final FacesMessage message = new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Passwords do not match!",
+					"Passwords do not match!");
+			throw new ValidatorException(message);
+		}
+	}
+
+	public void validateUserExists(final FacesContext context,
+			final UIComponent toValidate, final Object value) {
+
+		final String username = (String) value;
+		if (userService.exists(username)) {
+			final FacesMessage message = new FacesMessage(
+					FacesMessage.SEVERITY_ERROR,
+					"User with this login exists! Try with different one.",
+					"User with this login exists! Try with different one.");
+			throw new ValidatorException(message);
+		}
+	}
 
 	public List<UserDTO> getAllUsers() {
 		return allUsers;

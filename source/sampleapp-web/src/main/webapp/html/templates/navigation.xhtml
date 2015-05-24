@@ -11,8 +11,9 @@
 			<li><p:commandLink value="Panel Administracyjny"
 					action="#{navigationBean.redirectToUsersManagement()}"
 					rendered="#{sysAuth.isUserInRole('ADMIN')}" /></li>
-			<li>
-			</li>
+			<li><p:commandLink  action="/html/shopping_cart.xhtml">
+					<h:outputText id="cartItemCounter" value="Cart items: #{shoppingCart.cartItemQuantity}" />
+				</p:commandLink></li>
 		</ul>
 	</div>
 </ui:composition>
