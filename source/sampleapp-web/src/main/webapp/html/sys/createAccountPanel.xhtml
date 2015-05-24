@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	</f:facet>
+	<f:facet name="last">
+		<h:outputStylesheet library="css" name="main.css" target="head" />
+	</f:facet>
+	<title>Fill required data to create an account.</title>
+</h:head>
+
+<h:body>
+	<o:importConstants type="model.entity.Role.UserRoleName" />
+	<h:form id="createUserForm">
+
+		<div class="ui-grid ui-grid-responsive">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4" />
+				<div class="ui-grid-col-1">
+					<h:outputText value="Username:" />
+				</div>
+				<div class="ui-grid-col-2">
+					<h:inputText value="#{userManagement.actualUser.username}"
+						id="username" >
+					</h:inputText>
+				</div>
+			</div>
+			<br />
+
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4" />
+				<div class="ui-grid-col-1">
+					<h:outputText value="Password:" />
+				</div>
+				<div class="ui-grid-col-2">
+					<h:inputSecret value="#{userManagement.actualUser.password}"
+						id="password" >
+					</h:inputSecret>
+					<!-- dodaj komponent message -->
+				</div>
+			</div>
+			<br />
+
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4" />
+				<div class="ui-grid-col-1">
+					<h:outputText value="Repeat password:" />
+				</div>
+				<div class="ui-grid-col-2">
+					<h:inputSecret id="password2" >
+					</h:inputSecret>
+					<!-- dodaj komponent message -->
+				</div>
+			</div>
+			<br />
+
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-5" />
+				<div class="ui-grid-col-1">
+					<p:commandButton value="Create"
+						action="#{userManagement.createAccount()}" />
+				</div>
+				<div class="ui-grid-col-1"></div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4" />
+				<div class="ui-grid-col-4">
+					<h:messages />
+				</div>
+			</div>
+		</div>
+
+	</h:form>
+</h:body>
+
+</html>

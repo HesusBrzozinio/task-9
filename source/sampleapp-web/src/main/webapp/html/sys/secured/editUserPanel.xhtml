@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	</f:facet>
+	<f:facet name="last">
+		<h:outputStylesheet library="css" name="main.css" target="head" />
+	</f:facet>
+</h:head>
+
+<h:body>
+	<o:importConstants type="model.entity.Role.UserRoleName" />
+	<h:form id="editUserForm">
+		<p:panelGrid columns="2"
+			rendered="#{not empty userManagement.actualUser}" columnClasses="">
+
+			<h:outputText value="State:" />
+			<p:selectOneMenu id="usrState"
+				value="#{userManagement.actualUserState}">
+				<f:selectItems value="#{userManagement.allStates}" />
+			</p:selectOneMenu>
+
+			<h:outputText value="Roles:" />
+			<p:selectManyMenu id="usrRoles"
+				value="#{userManagement.actualUserRoles}" filterMatchMode="contains"
+				converter="omnifaces.GenericEnumConverter" showCheckbox="true">
+				<f:selectItems value="#{userManagement.allRoles}" var="role"
+					itemLabel="#{role}" itemValue="#{role}" />
+			</p:selectManyMenu>
+			<p:commandButton icon="ui-icon-search"
+				actionListener="#{userManagement.closeEditPanel()}" />
+		</p:panelGrid>
+	</h:form>
+</h:body>
+
+</html>

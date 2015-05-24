@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/html/templates/layout.xhtml">
+	<ui:define name="body">
+		<div style="padding-top: 25px;">
+			<h:form id="login-form">
+				<h3 />
+
+				<div class="ui-grid ui-grid-responsive">
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-4" />
+						<div class="ui-grid-col-1">
+							<h:outputText value="Username:" />
+						</div>
+						<div class="ui-grid-col-2">
+							<h:inputText value="#{sysAuth.username}" id="username"
+								required="true" autocomplete="false" />
+						</div>
+
+					</div>
+					<br />
+
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-4" />
+						<div class="ui-grid-col-1">
+							<h:outputText value="Password:" />
+						</div>
+						<div class="ui-grid-col-2">
+							<h:inputSecret value="#{sysAuth.password}" id="password"
+								required="true" autocomplete="false" />
+						</div>
+					</div>
+					<br />
+
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-5" />
+						<div class="ui-grid-col-1">
+							<h:commandButton id="button" value="Login"
+								action="#{sysAuth.doLogin}" />
+						</div>
+						<div class="ui-grid-col-1">
+							<h:commandLink action="#{navigationBean.redirectHome}"
+								value="Info page" />
+						</div>
+					</div>
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-4" />
+						<div class="ui-grid-col-4">
+							<h:messages />
+						</div>
+					</div>
+				</div>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
+
+</html>

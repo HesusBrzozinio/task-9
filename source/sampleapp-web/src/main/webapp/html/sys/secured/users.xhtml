@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/html/templates/layout.xhtml">
+	<ui:define name="body">
+		<p:dataTable widgetVar="userList" id="userList" var="user"
+			value="#{userManagement.allUsers}"
+			rowStyleClass="#{user.state eq 'ACTIVE' ? null : 'orange'}">
+			<p:column headerText="ID">
+				<h:outputText value="#{user.id}" />
+			</p:column>
+
+			<p:column headerText="Name">
+				<h:outputText value="#{user.username}" />
+			</p:column>
+
+			<p:column headerText="Status">
+				<h:outputText value="#{user.state}" />
+			</p:column>
+
+			<p:column headerText="Roles">
+				<ul>
+					<ui:repeat value="#{user.roles}" var="roleItem">
+						<li><h:outputText value="#{roleItem}" /></li>
+					</ui:repeat>
+				</ul>
+			</p:column>
+
+			<p:column headerText="Actions">
+				<h:form id="user_form_#{user.id}">
+					<p:commandButton action="#{userManagement.editUserData}"
+						icon="ui-icon-wrench" title="Edit">
+						<f:setPropertyActionListener target="#{userManagement.actualUser}"
+							value="#{user}" />
+						<p:ajax event="dialogReturn" update="userList"
+							listener="#{userManagement.onUserModified}" />
+					</p:commandButton>
+					<p:spacer width="10" />
+
+					<p:commandButton action="#{userManagement.activate}"
+						rendered="#{not userManagement.inState(user, 'ACTIVE')}"
+						icon="ui-icon-circle-check" title="Activate"
+						update="@form userList">
+						<f:setPropertyActionListener target="#{userManagement.actualUser}"
+							value="#{user}" />
+					</p:commandButton>
+					<p:commandButton action="#{userManagement.deactivate}"
+						rendered="#{userManagement.inState(user, 'ACTIVE')}"
+						icon="ui-icon-circle-close" title="Deactivate"
+						update="@form userList">
+						<f:setPropertyActionListener target="#{userManagement.actualUser}"
+							value="#{user}" />
+					</p:commandButton>
+					<p:spacer width="10" />
+
+					<p:commandButton action="#{userManagement.deleteUser}"
+						icon="ui-icon-trash" title="Delete" update="@form userList">
+						<f:setPropertyActionListener target="#{userManagement.actualUser}"
+							value="#{user}" />
+					</p:commandButton>
+				</h:form>
+			</p:column>
+		</p:dataTable>
+
+	</ui:define>
+</ui:composition>
+
+</html>

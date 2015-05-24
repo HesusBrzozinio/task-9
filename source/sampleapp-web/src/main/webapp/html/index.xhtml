@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/html/templates/layout.xhtml">
+	<ui:define name="body">
+		<h:form id="book-form">
+			<p:dataGrid var="book" value="#{booksView.books}" columns="3"
+				layout="grid" rows="12" paginator="true" id="books"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="6,12,16">
+
+				<f:facet name="header">
+				<!-- wykorzystaj zarejestrowany resource bundle do wyświetlenia opisu strony w wielu językach -->
+				</f:facet>
+
+				<p:panel header="#{book.title}" style="text-align:left">
+
+					<div class="ui-grid ui-grid-responsive">
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-6">
+								<p:graphicImage library="images" name="design-book.jpg"
+									width="120" height="120" />
+							</div>
+							<div class="ui-grid-col-6">
+								<div class="ui-grid-row">
+									Autor:
+									<h:outputText value="#{book.author}" />
+								</div>
+								<div class="ui-grid-row">
+									Data wydania:
+									<h:outputText value="#{book.year}">
+										<f:convertDateTime type="date" pattern="yyyy-MM-dd" />
+									</h:outputText>
+								</div>
+								<div class="ui-grid-row">
+									Wydawnictwo:
+									<h:outputText value="#{book.publisher}" />
+								</div>
+								<div class="ui-grid-row">
+									Oprawa:
+									<h:outputText value="#{book.publisher}" />
+								</div>
+								<div class="ui-grid-row">
+									Cena:
+									<h:outputText value="#{book.price}">
+										<f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+									</h:outputText>
+									zł
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Dodaj przycisk akcji wywołujący metodę dodawania ksiązki do koszyka oraz aktualizujący stan licznika ksiązek w koszyku -->
+				</p:panel>
+
+			</p:dataGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>
